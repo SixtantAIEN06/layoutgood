@@ -1,4 +1,4 @@
-# LAOUTGOOD
+# LAYOUTGOOD
 try use route to excute model on website
 django 必須使用虛擬環境執行 
 請用virtualenv建立環境才安裝所需套件套件
