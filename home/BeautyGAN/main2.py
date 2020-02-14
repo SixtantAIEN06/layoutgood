@@ -17,11 +17,14 @@ def deprocess(img):
     return (img + 1) / 2
 
 def beauty(image):
-    org_h,org_w,_=imread(image).shape
+    im=Image.open(image)
+    image=im.convert('RGB')
+    image.save('./home/static/temp/toRGB.jpg')
+    org_h,org_w,_=imread('./home/static/temp/toRGB.jpg').shape
 
     face_cascade = cv2.CascadeClassifier('./home/BeautyGAN/haarcascade_frontalface_default.xml')
 # Read the input image
-    img = cv2.imread(image)
+    img = cv2.imread('./home/static/temp/toRGB.jpg')
     img_before=img[:,:,::-1]
     imsave('./home/static/temp/before.jpg',img_before)
     # Convert into grayscale
@@ -100,5 +103,6 @@ def beauty(image):
         face_num+=1
 
     os.remove('./home/static/temp/result_.jpg')
+    os.remove('./home/static/temp/toRGB.jpg')
     # os.remove('./home/static/temp/before.jpg')
 
