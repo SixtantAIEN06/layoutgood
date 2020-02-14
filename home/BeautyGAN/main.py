@@ -8,9 +8,7 @@ from imageio import imread, imsave
 import cv2
 import argparse
 
-# parser = argparse.ArgumentParser()
-# parser.add_argument('--no_makeup', type=str, default=os.path.join('imgs', 'no_makeup', 'xfsy_0068.png'), help='path to the no_makeup image')
-# args = parser.parse_args()
+
 
 def preprocess(img):
     return (img / 255. - 0.5) * 2
