@@ -77,7 +77,7 @@ class YoloTest(object):
 
         return bboxes
 
-    def evaluate(self):
+    def evaluate(self,img_):
         predicted_dir_path = 'home/object_detection/mAP/predicted'
         ground_truth_dir_path = 'home/object_detection/mAP/ground-truth'
         # if os.path.exists(predicted_dir_path): shutil.rmtree(predicted_dir_path)
@@ -89,7 +89,9 @@ class YoloTest(object):
         print(self.images_path)
         print(os.listdir(self.images_path))
         for num, line in enumerate(os.listdir(self.images_path)):
-            image_path = self.images_path + line
+            # image_path = self.images_path + line
+            image_path = img_
+
         # with open(self.write_image_path, 'r') as images_file:
         #     for num, line in enumerate(annotation_file):
         #         annotation = line.strip().split()
@@ -135,6 +137,7 @@ class YoloTest(object):
                     class_names.append(class_name)
                     bbox_mess = ' '.join
                     print('\t' + str(bbox_mess).strip())
+                
                 d = dict(Counter(class_names))
                 d['image_path']=image_path
                 self.dlist.append(d)

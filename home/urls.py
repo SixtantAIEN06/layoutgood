@@ -7,7 +7,9 @@ urlpatterns = [
     path('styletransfer2/',views.styletransfer2),
     path('delmypic/',views.delmypic,name='uplaodfile'),
     # path('styletransfer/{imgpath:imgpath}',views.styletransfer),
-    path('result/',views.result),
+    path('json/',views.json),
     path('objectdetection/',views.objectdetection),
     path('facerecognition/',views.facerecognition),
+    path('styletransfer/json/',views.json),
+    path('styletransfer/httpget/',views.httpget),
 ]

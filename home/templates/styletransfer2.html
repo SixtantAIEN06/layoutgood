@@ -1,97 +1,95 @@
 {%extends 'base.html' %}
 {% load static %}
-{%  block title %} STYLE SELECT  {% endblock %}
-{% block cardtitle%}  CHOOSE THE STYLE YOU LIKE ! {% endblock%}
+{%  block title %} STYLE SELECT {% endblock %}
+{% block cardtitle%} CHOOSE THE STYLE YOU LIKE ! {% endblock%}
 
 {%block content%}
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" id="idForm" enctype="multipart/form-data">
   {% csrf_token %}
-  <!-- <div class="form-group">
-              <label for="photoupload">Example file input</label>
-              <input type="file" name='photoupload' class="form-control-file mb-3" id="photoupload"> -->
+  {% if photopath != None %}
+<div class="container">
+  <div class="row">
+    <div class="mt-3" style="margin:0 auto">
+      <img id="radius" src="{% static './temp/TEMP.jpg' %}" style="max-height: 300px; margin:0 auto">
+      <img id="radius" class="notradius" src="{% static './temp/arrow.png' %}" style="max-height: 300px; margin-left: 50px;">
+      <img id="radius" src="{% static './temp/split.jpg' %}" style="max-height: 300px; margin-left: 50px;">
+    </div>
+  </div>
 
-  <form method="POST">
-    <div class="row">
-      <div class="col-lg-8 ml-5">
+  {% endif %}
+
+  <!-- </div>
+    </div> -->
+  <div class="row">
+    <div class="mt-3" style="margin:0 auto">
+      
+      <div>
+
         <label for=style1>
-          <div><img src="{% static './makeupstyle/1.jpg' %}" height="120"></div>
+          <figure><div><img id="style-1" src="{% static './makeupstyle/1.jpg' %}" height="120"></div><figcaption>風格1</figcaption></figure>
         </label>
         <input type="radio" name="style" id="style1" value="style1">
+
         <label for=style2>
-          <div><img src="{% static './makeupstyle/2.jpg' %}" height="120"></div>
+          <figure><div><img id="style-2" src="{% static './makeupstyle/2.jpg' %}" height="120"></div><figcaption>風格2</figcaption></figure>
         </label>
         <input type="radio" name="style" id="style2" value="style2">
+
         <label for=style3>
-          <div><img src="{% static './makeupstyle/3.jpg' %}" height="120"></div>
+          <figure><div><img id="style-3" src="{% static './makeupstyle/3.jpg' %}" height="120"></div><figcaption>風格3</figcaption></figure>
         </label>
         <input type="radio" name="style" id="style3" value="style3">
+
         <label for=style4>
-          <div><img src="{% static './makeupstyle/4.jpg' %}" height="120"></div>
+          <figure><div><img id="style-4" src="{% static './makeupstyle/4.jpg' %}" height="120"></div><figcaption>風格4</figcaption></figure>
         </label>
         <input type="radio" name="style" id="style4" value="style4">
-      </div>
-    </div>
-    
-    <div class="row">
-      <div class="col-lg-8 ml-5">
+
 
         <label for=style5>
-          <div><img src="{% static './makeupstyle/5.jpg' %}" height="120"></div>
+          <figure><div><img id="style-5" src="{% static './makeupstyle/5.jpg' %}" height="120"></div><figcaption>風格5</figcaption></figure>
         </label>
+
         <input type="radio" name="style" id="style5" value="style5">
+
+
         <label for=style6>
-          <div><img src="{% static './makeupstyle/6.jpg' %}" height="120"></div>
+          <figure><div><img id="style-6" src="{% static './makeupstyle/6.jpg' %}" height="120"></div><figcaption>風格6</figcaption></figure>
         </label>
         <input type="radio" name="style" id="style6" value="style6">
+
+
         <label for=style7>
-          <div><img src="{% static './makeupstyle/7.jpg' %}" height="120"></div>
+          <figure><div><img id="style-7" src="{% static './makeupstyle/7.jpg' %}" height="120"></div><figcaption>風格7</figcaption></figure>
         </label>
         <input type="radio" name="style" id="style7" value="style7">
+
         <label for=style8>
-          <div><img src="{% static './makeupstyle/8.jpg' %}" height="120"></div>
+          <figure><div><img id="style-8" src="{% static './makeupstyle/8.jpg' %}" height="120"></div><figcaption>風格8</figcaption></figure>
         </label>
         <input type="radio" name="style" id="style8" value="style8">
 
       </div>
     </div>
-   
 
+  
+  <div class="container">
     <div class="row">
-      <div class="col-lg-8 ml-5">
+      <div class="mt-3">
 
-      <button type="submit" class="btn btn-primary" id="submitclick">Create</button>
+        <div><button type="submit" class="btn btn-primary" id="submitclick" style="display: none;">Create</button></div>
+      </div>
+
     </div>
-    </div>
-
-    </div>
-
-  </form>
-
-  {% if photopath != None %}
-
-  <div><img src="{% static './temp/split.jpg' %}" height="240"></div>
 
 
-  {% endif %}
-
-  <!-- {% if photopaths != None %}
-              <form>
-                
-                {% for photopath in photopaths %}
-                
-                <input type="radio" name="style" id={{photopath}}>
-                  <label for={{photopath}}>
-                  <div><img src="{% static photopath %}" height="120"></div>
-                </label>
-                  {% endfor %}
-              </form>
-              {% endif %} -->
 
   </div>
+
+</div>
+</div>
 </form>
 <!-- <script>
-
-
   // function submitXML() {
   //   var chooseid = $('#photoupload').get(0).files[0];
   //   console.info(chooseid);
@@ -108,4 +106,4 @@
   $( "#target" ).submit();
 });
 </script> -->
-{% endblock %}  
+{% endblock %}

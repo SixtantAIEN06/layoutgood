@@ -5,6 +5,7 @@ import numpy as np
 import os
 import glob
 from imageio import imread, imsave
+from PIL import Image
 import cv2
 import argparse
 
@@ -19,12 +20,17 @@ def deprocess(img):
     return (img + 1) / 2
 
 def beauty(image):
-    org_h,org_w,_=imread(image).shape
+
+    im = Image.open(image)
+    image = im.convert('RGB')
+    image.save('./home/static/temp/TEMP.jpg')
+    
+    org_h,org_w,_=imread('./home/static/temp/TEMP.jpg').shape
 
 
     batch_size = 1
     img_size = 256
-    no_makeup = cv2.resize(imread(image), (img_size, img_size))
+    no_makeup = cv2.resize(imread('./home/static/temp/TEMP.jpg'), (img_size, img_size))
     X_img = np.expand_dims(preprocess(no_makeup), 0)
     makeups = glob.glob(os.path.join('home','static','makeupstyle','*'))
 

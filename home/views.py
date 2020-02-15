@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.core.files.storage import FileSystemStorage
 from .dlib import forImport_recognize_faces_image
 from .BeautyGAN import main as BeautyGAN
@@ -9,11 +9,13 @@ import glob
 import os
 # import subprocess
 import tensorflow as tf
+import datetime 
 
-# from .flask.peeweetest import Classified
 
-# from .object_detection.evaluate import YoloTest
-# YoloTest = YoloTest()
+from .flask.peeweetest import Classified
+
+from .object_detection.evaluate import YoloTest
+YoloTest = YoloTest()
 
 # Create your views here.
 def index(request):
@@ -29,9 +31,11 @@ def facerecognition(request):
         myfile=request.FILES['photoupload']
         fs = FileSystemStorage(location='home/static/images/')
         fs.save(myfile.name,myfile)
-        forImport_recognize_faces_image.readPara("home/dlib/encoding3.pickle",f'home/static/images/{myfile.name}','cnn')
+        forImport_recognize_faces_image.readPara("home/dlib/encoding3.pickle",f'home/static/images/{myfile.name}','cnn') #f'home/static/images/{myfile.name}
         photopath="images/upload.jpg"
-    title="FACE RECOGNITION"
+        
+    title = "FACE RECOGNITION"
+    now = datetime.datetime.now()
     return render(request,'layout.html',locals())
 
 
@@ -50,6 +54,7 @@ def styletransfer(request):
 
         return redirect("/styletransfer2")
     title = "STYLE TRANSFER"
+    now = datetime.datetime.now()
     return render(request,'layout.html',locals())
     
 def styletransfer2(request):
@@ -64,7 +69,7 @@ def styletransfer2(request):
     # elif os.path('./home/static/temp/split.jpg'):
     #     os.remove('./home/static/temp/split.jpg')  
     
-
+    now=datetime.datetime.now()
     return render(request,'styletransfer2.html',locals())  
         
 
@@ -74,20 +79,38 @@ def objectdetection(request):
         fs = FileSystemStorage(location='home/static/images/')
         fs.save(myfile.name,myfile)
         # print(f'home/static/images/{myfile.name}.jpg')
-        # forImport_recognize_faces_image.readPara("home/dlib/encoding3.pickle",f'home/static/images/{myfile.name}','cnn')
+        
         # photopath="images/upload.jpg"
-        YoloTest.evaluate()
+        YoloTest.evaluate(f'home/static/images/{myfile.name}')
         # print(YoloTest.dlist)
         for item in YoloTest.dlist:
+            print("========================================")
+
+            print(item)
+            print("========================================")
+
             sort = Classified(**item) 
             sort.save()
-        title="OBJECT"
+    title="OBJECT DETECTION"
+    now=datetime.datetime.now()
     return render(request,'layout.html',locals())
 
 
 def delmypic(request):
-    return render(request,'delmypic.html')
+    now=datetime.datetime.now()
+    return render(request,'delmypic.html',locals())
 
-def result(request):
+def json(request):
     # if request.method =='POST':
-    return render(request,'result.html',locals())
+    datas={"name":"ford","age":"31"}
+    # now=datetime.datetime.now()
+    return JsonResponse(datas,safe=False)
+
+
+def httpget(request):
+    # if request.method =='POST':
+    name=request.GET["name"]
+    age=request.GET["age"]
+
+    # now=datetime.datetime.now()
+    return HttpResponse(f"HELLO {name},{age}")
