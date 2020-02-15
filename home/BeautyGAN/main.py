@@ -21,14 +21,14 @@ def beauty(image):
 
     im = Image.open(image)
     image = im.convert('RGB')
-    image.save('./home/static/temp/TEMP.jpg')
+    image.save('./home/static/temp/before.jpg')
     
-    org_h,org_w,_=imread('./home/static/temp/TEMP.jpg').shape
+    org_h,org_w,_=imread('./home/static/temp/before.jpg').shape
 
 
     batch_size = 1
     img_size = 256
-    no_makeup = cv2.resize(imread('./home/static/temp/TEMP.jpg'), (img_size, img_size))
+    no_makeup = cv2.resize(imread('./home/static/temp/before.jpg'), (img_size, img_size))
     X_img = np.expand_dims(preprocess(no_makeup), 0)
     makeups = glob.glob(os.path.join('home','static','makeupstyle','*'))
 

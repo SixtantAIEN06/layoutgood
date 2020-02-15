@@ -11,7 +11,7 @@
     <!-- <div class="alert"></div> -->
     
     {% if photopath != None %}
-    <div style="margin:0 auto"><img id="radius" style="width: 640px;margin:0 auto" src="{% static photopath %}"></div>
+    <div style="margin:0 auto"><img id="blah" style="max-height: 600px;margin:0 auto" src="{% static photopath %}"></div>
     {% endif %}
     {% if photopath == None %}
     <div ><img id="blah" style="max-height: 600px; margin:0 auto" src="{% static 'images/baby.jpg' %}" alt="your image"
@@ -25,18 +25,18 @@
       </div>
     </div>
 
-    {% if photopath == None %}
+    
     <div class="mb-3 mt-3">
       <button type="submit" id="photouploadButton" class="btn btn-primary">Submit</button><span class="ml-3" id="warnforpic"></span>
       <sapn class="ml-3" id="warnforpic"></sapn>
     </div>
-    {% endif %}
-    {% if photopath != None %}
+   
+    <!-- {% if photopath != None %}
     <button type="button" id="photodownload" class="btn btn-primary">Download</button>
     {% endif %}
     <div id="show"></div>
     <div><button type="button" class="btn btn-primary" id="json">json</button></div>
-    <div><button type="button" class="btn btn-primary" id="httpget">httpget</button></div>
+    <div><button type="button" class="btn btn-primary" id="httpget">httpget</button></div> -->
   </form>
 </div>
 {% endblock %}

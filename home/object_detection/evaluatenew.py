@@ -37,7 +37,7 @@ class YoloTest(object):
         self.write_image      = cfg.TEST.WRITE_IMAGE
         self.write_image_path = cfg.TEST.WRITE_IMAGE_PATH
         self.show_label       = cfg.TEST.SHOW_LABEL
-        self.images_path       = cfg.TEST.IMAGES_PATH
+        self.images_path      = cfg.TEST.IMAGES_PATH 
 
         with tf.name_scope('input'):
             self.input_data = tf.placeholder(dtype=tf.float32, name='input_data')
@@ -77,20 +77,25 @@ class YoloTest(object):
 
         return bboxes
 
-    def evaluate(self,img_):
-        predicted_dir_path = 'home/object_detection/mAP/predicted'
-        ground_truth_dir_path = 'home/object_detection/mAP/ground-truth'
+    def evaluate(self,user_id,dist_name):
+        
+        new_images_path = os.path.join(self.images_path,user_id)
+        predicted_dir_path = f'./object_detection/mAP/predicted/{user_id}'
+        ground_truth_dir_path = f'./object_detection/mAP/ground-truth/{user_id}'
         # if os.path.exists(predicted_dir_path): shutil.rmtree(predicted_dir_path)
         # if os.path.exists(ground_truth_dir_path): shutil.rmtree(ground_truth_dir_path)
         # if os.path.exists(self.write_image_path): shutil.rmtree(self.write_image_path)
+        if not os.path.exists(predicted_dir_path): os.mkdir(predicted_dir_path)
         # os.mkdir(predicted_dir_path)
         # os.mkdir(ground_truth_dir_path)
         # os.mkdir(self.write_image_path)
-        # print(self.images_path)
-        # print(os.listdir(self.images_path))
-        for num, line in enumerate(os.listdir(self.images_path)):
-            # image_path = self.images_path + line
-            image_path = img_
+        print(new_images_path)
+        print(os.listdir(new_images_path))
+        # for num, line in enumerate(os.listdir(self.images_path)):
+        #     image_path = self.images_path + '/' + line
+        #     print("image_path",image_path)
+        image_path = new_images_path + '/' + dist_name
+        print("image_path",image_path)
 
         # with open(self.write_image_path, 'r') as images_file:
         #     for num, line in enumerate(annotation_file):
@@ -118,64 +123,63 @@ class YoloTest(object):
         #                 print('\t' + str(bbox_mess).strip())
         #         print('=> predict result of %s:' % image_name)
         #         predict_result_path = os.path.join(predicted_dir_path, str(num) + '.txt')
-            image = cv2.imread(image_path)
-            bboxes_pr = self.predict(image)
+        image = cv2.imread(image_path)
+        bboxes_pr = self.predict(image)
 
-            if self.write_image:
-                image = utils.draw_bbox(image, bboxes_pr, show_label=self.show_label)
-                cv2.imwrite(self.write_image_path+line, image)
-            self.dlist = []    
-            with open("home/object_detection/mAP/predicted/123.txt", 'a') as f:
-                class_names = []
-                for bbox in bboxes_pr: 
-                    coor = np.array(bbox[:4], dtype=np.int32)
-                    score = bbox[4]
-                    class_ind = int(bbox[5])               
-                    class_name = self.classes[class_ind]
-                    score = '%.4f' % score
-                    xmin, ymin, xmax, ymax = list(map(str, coor))
-                    class_names.append(class_name)
-                    bbox_mess = ' '.join
-                    print('\t' + str(bbox_mess).strip())
-                
-                d = dict(Counter(class_names))
-                d['image_path']=image_path
-                self.dlist.append(d)
-                im = image_path
-                id_name = f'{dict(Counter(class_names))}@{im}\n' 
-                f.write(id_name)
-                if num == 9:
-                    break
-    def voc_2012_test(self, voc2012_test_path):
-
-        img_inds_file = os.path.join(voc2012_test_path, 'ImageSets', 'Main', 'test.txt')
-        with open(img_inds_file, 'r') as f:
-            txt = f.readlines()
-            image_inds = [line.strip() for line in txt]
-
-        results_path = 'results/VOC2012/Main'
-        if os.path.exists(results_path):
-            shutil.rmtree(results_path)
-        os.makedirs(results_path)
-
-        for image_ind in image_inds:
-            image_path = os.path.join(voc2012_test_path, 'JPEGImages', image_ind + '.jpg')
-            image = cv2.imread(image_path)
-
-            print('predict result of %s:' % image_ind)
-            bboxes_pr = self.predict(image)
-
-            for bbox in bboxes_pr:    
+        if self.write_image:
+            image = utils.draw_bbox(image, bboxes_pr, show_label=self.show_label)
+            cv2.imwrite(self.write_image_path+dist_name, image)
+        self.dlist = []    
+        with open(f"./object_detection/mAP/predicted/{user_id}/123.txt", 'a') as f:
+            class_names = []
+            for bbox in bboxes_pr: 
                 coor = np.array(bbox[:4], dtype=np.int32)
                 score = bbox[4]
-                class_ind = int(bbox[5])
+                class_ind = int(bbox[5])               
                 class_name = self.classes[class_ind]
                 score = '%.4f' % score
                 xmin, ymin, xmax, ymax = list(map(str, coor))
-                bbox_mess = ' '.join([image_ind, score, xmin, ymin, xmax, ymax]) + '\n'
-                with open(os.path.join(results_path, 'comp4_det_test_' + class_name + '.txt'), 'a') as f:
-                    f.write(bbox_mess)
+                class_names.append(class_name)
+                bbox_mess = ' '.join
                 print('\t' + str(bbox_mess).strip())
+            d = dict(Counter(class_names))
+            d['image_path']=image_path
+            self.dlist.append(d)
+            im = image_path
+            id_name = f'{dict(Counter(class_names))}\n{im}\n' 
+            f.write(id_name)
+            # if num == 9:
+            #     break
+    # def voc_2012_test(self, voc2012_test_path):
+
+    #     img_inds_file = os.path.join(voc2012_test_path, 'ImageSets', 'Main', 'test.txt')
+    #     with open(img_inds_file, 'r') as f:
+    #         txt = f.readlines()
+    #         image_inds = [line.strip() for line in txt]
+
+    #     results_path = 'results/VOC2012/Main'
+    #     if os.path.exists(results_path):
+    #         shutil.rmtree(results_path)
+    #     os.makedirs(results_path)
+
+    #     for image_ind in image_inds:
+    #         image_path = os.path.join(voc2012_test_path, 'JPEGImages', image_ind + '.jpg')
+    #         image = cv2.imread(image_path)
+
+    #         print('predict result of %s:' % image_ind)
+    #         bboxes_pr = self.predict(image)
+
+    #         for bbox in bboxes_pr:    
+    #             coor = np.array(bbox[:4], dtype=np.int32)
+    #             score = bbox[4]
+    #             class_ind = int(bbox[5])
+    #             class_name = self.classes[class_ind]
+    #             score = '%.4f' % score
+    #             xmin, ymin, xmax, ymax = list(map(str, coor))
+    #             bbox_mess = ' '.join([image_ind, score, xmin, ymin, xmax, ymax]) + '\n'
+    #             with open(os.path.join(results_path, 'comp4_det_test_' + class_name + '.txt'), 'a') as f:
+    #                 f.write(bbox_mess)
+    #             print('\t' + str(bbox_mess).strip())
 
 
 # if __name__ == '__main__': YoloTest().evaluate()

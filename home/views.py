@@ -10,6 +10,10 @@ import os
 # import subprocess
 import tensorflow as tf
 import datetime 
+from .modelsclassified import classified
+from django.core import serializers
+from django.core.serializers import serialize
+
 
 
 from .flask.peeweetest import Classified
@@ -21,10 +25,14 @@ YoloTest = YoloTest()
 def index(request):
 
     #return HttpResponse("<p>Hello world!</p>")
-    return render(request,'index.html')
+    return render(request,'home/index.html')
     
 def gallery(request):
-    return render(request,'gallery.html')
+    aaa=classified()
+    datas=aaa.all()
+    print(datas)
+    return JsonResponse(datas,safe=False)
+    # return render(request,'gallery.html')
 
 def facerecognition(request):
     if request.method =='POST' and request.FILES['photoupload']:
