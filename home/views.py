@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from django.core.files.storage import FileSystemStorage
 from .dlib import forImport_recognize_faces_image
-from .BeautyGAN import main as BeautyGAN
+from .BeautyGAN import main2 as BeautyGAN
 from .BeautyGAN import split as beautysplit
 import cv2
 import glob
@@ -33,7 +33,7 @@ def facerecognition(request):
         fs.save(myfile.name,myfile)
         forImport_recognize_faces_image.readPara("home/dlib/encoding3.pickle",f'home/static/images/{myfile.name}','cnn') #f'home/static/images/{myfile.name}
         photopath="images/upload.jpg"
-        
+
     title = "FACE RECOGNITION"
     now = datetime.datetime.now()
     return render(request,'layout.html',locals())
