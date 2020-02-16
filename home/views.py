@@ -10,13 +10,14 @@ import os
 # import subprocess
 import tensorflow as tf
 import datetime 
-from .modelsclassified import classified
+from .models import Classified
+# from .modelsclassified import classified
 from django.core import serializers
 from django.core.serializers import serialize
 
 
 
-from .flask.peeweetest import Classified
+# from .flask.peeweetest import Classified
 
 from .object_detection.evaluate import YoloTest
 YoloTest = YoloTest()
@@ -26,13 +27,37 @@ def index(request):
 
     #return HttpResponse("<p>Hello world!</p>")
     return render(request,'home/index.html')
+
+def selected(request):
+    # if request.method=='POST':
+    #     request
+    # condition = request.POST['searchbox']
+    typessname="person"
+    typenamewithnober=typessname+"__gt"
+    print(typenamewithnober)
+    numbers=1
+    # # keypair={type:number}
+    # select_pic=classified()
+    # datas=select_pic.selected(types,numbers)
     
+    # select_pic.objects.filter(types=numbers)
+    datas=Classified.objects.values_list("image_path").filter(bear__gte=numbers)
+    # datas=cat.objects.filter(types=numbers)
+
+    # print(datas)
+    return render(request,'select.html',locals())
+
 def gallery(request):
-    aaa=classified()
-    datas=aaa.all()
-    print(datas)
-    return JsonResponse(datas,safe=False)
-    # return render(request,'gallery.html')
+    # public_pic=classified()
+    # datas=public_pic.all()
+    # datas=Classified.objects.filter(person__gt=0)
+
+
+    # print(Classified.objects.values_list("image_path"))
+    datas=Classified.objects.values_list("image_path")
+    # print(datas[89])
+    # return JsonResponse(datas,safe=False)
+    return render(request,'gallery.html',locals())
 
 def facerecognition(request):
     if request.method =='POST' and request.FILES['photoupload']:
@@ -89,16 +114,20 @@ def objectdetection(request):
         # print(f'home/static/images/{myfile.name}.jpg')
         
         # photopath="images/upload.jpg"
-        YoloTest.evaluate(f'home/static/images/{myfile.name}')
+        path_head='home/static/'
+        img_path=f'images/{myfile.name}'
+        # YoloTest.evaluate(f'home/static/images/{myfile.name}')
+        YoloTest.evaluate(path_head,img_path)
         # print(YoloTest.dlist)
         for item in YoloTest.dlist:
             print("========================================")
 
             print(item)
             print("========================================")
-
-            sort = Classified(**item) 
-            sort.save()
+            sort =Classified.objects.create(**item)
+            sort .save()
+            # sort = Classified(**item) 
+            # sort.save()
     title="OBJECT DETECTION"
     now=datetime.datetime.now()
     return render(request,'layout.html',locals())

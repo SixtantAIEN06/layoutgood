@@ -12,5 +12,6 @@ urlpatterns = [
     path('facerecognition/',views.facerecognition),
     path('styletransfer/json/',views.json),
     path('styletransfer/httpget/',views.httpget),
+    path('selected/',views.selected)
 
 ]

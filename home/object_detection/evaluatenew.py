@@ -95,7 +95,9 @@ class YoloTest(object):
         #     image_path = self.images_path + '/' + line
         #     print("image_path",image_path)
         image_path = new_images_path + '/' + dist_name
+        print("99====================================")
         print("image_path",image_path)
+        print("99====================================")
 
         # with open(self.write_image_path, 'r') as images_file:
         #     for num, line in enumerate(annotation_file):
