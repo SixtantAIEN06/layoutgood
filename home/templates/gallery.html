@@ -3,11 +3,13 @@
 {% block title %}AIEN06-TEAM 4{% endblock %}
 
 {% block content %}
+
+
 {% for data in datas%}
-<div class="ml-3 mb-5" style="float: left;"><img id="gla" src="{% static data.0 %}" style="max-width: 200px" alt=""></div>
+<div class="ml-3 mb-5" style="float: left; z-index: auto;"><img id="gla" src="{% static data.0 %}"
+        style="max-width: 200px" alt="">
+</div>
 {% endfor %}
+
+
 {% endblock%}
-
-
-
-

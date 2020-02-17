@@ -24,9 +24,9 @@ YoloTest = YoloTest()
 
 # Create your views here.
 def index(request):
-
+    date=datetime.datetime.now()
     #return HttpResponse("<p>Hello world!</p>")
-    return render(request,'home/index.html')
+    return render(request,'home/index.html', locals())
 
 def selected(request):
     # if request.method=='POST':
@@ -51,7 +51,7 @@ def gallery(request):
     # public_pic=classified()
     # datas=public_pic.all()
     # datas=Classified.objects.filter(person__gt=0)
-
+    date=datetime.datetime.now()
 
     # print(Classified.objects.values_list("image_path"))
     datas=Classified.objects.values_list("image_path")
@@ -60,19 +60,25 @@ def gallery(request):
     return render(request,'gallery.html',locals())
 
 def facerecognition(request):
+    date=datetime.datetime.now()
+    print('face begin')
     if request.method =='POST' and request.FILES['photoupload']:
         myfile=request.FILES['photoupload']
+        print('myfile', myfile)
         fs = FileSystemStorage(location='home/static/images/')
         fs.save(myfile.name,myfile)
         forImport_recognize_faces_image.readPara("home/dlib/encoding3.pickle",f'home/static/images/{myfile.name}','cnn') #f'home/static/images/{myfile.name}
         photopath="images/upload.jpg"
+        
 
     title = "FACE RECOGNITION"
     now = datetime.datetime.now()
+    
     return render(request,'layout.html',locals())
 
 
-def styletransfer(request):  
+def styletransfer(request):
+    date=datetime.datetime.now()  
     if request.method =='POST' and request.FILES['photoupload']:
         myfile=request.FILES['photoupload']
         fs = FileSystemStorage(location='home/static/images/')
@@ -91,6 +97,7 @@ def styletransfer(request):
     return render(request,'layout.html',locals())
     
 def styletransfer2(request):
+    date=datetime.datetime.now()
     if request.method =='POST' and request.POST["style"]:
 
         beautysplit.split(request.POST["style"])
@@ -107,6 +114,7 @@ def styletransfer2(request):
         
 
 def objectdetection(request):
+    date=datetime.datetime.now()
     if request.method =='POST' and request.FILES['photoupload']:
         myfile=request.FILES['photoupload']
         fs = FileSystemStorage(location='home/static/images/')
