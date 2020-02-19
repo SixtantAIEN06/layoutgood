@@ -46,11 +46,13 @@ class YoloTest(object):
         model = YOLOV3(self.input_data, self.trainable)
         self.pred_sbbox, self.pred_mbbox, self.pred_lbbox = model.pred_sbbox, model.pred_mbbox, model.pred_lbbox
 
-        with tf.name_scope('ema'):
-            ema_obj = tf.train.ExponentialMovingAverage(self.moving_ave_decay)
+        # with tf.name_scope('ema'):
+        #     ema_obj = tf.train.ExponentialMovingAverage(self.moving_ave_decay)
 
         self.sess  = tf.Session(config=tf.ConfigProto(allow_soft_placement=True))
-        self.saver = tf.train.Saver(ema_obj.variables_to_restore())
+        # self.saver = tf.train.Saver(ema_obj.variables_to_restore())
+        self.saver = tf.train.Saver()
+
         self.saver.restore(self.sess, self.weight_file)
 
     def predict(self, image):
