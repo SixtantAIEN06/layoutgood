@@ -3,8 +3,24 @@
 {% block title %}AIEN06-TEAM 4{% endblock %}
 
 {% block content %}
+
+<form action="/selected/" method="get">
+
+    <div class="form-group">
+            <label for="typename">Class name</label>
+            <input type="text" name="searchname" class="form-control" id="typename">
+    </div>
+    <div class="form-group">
+            <label for="numbersinput">Numbers</label>
+            <input type="text" name="nums" class="form-control" id="numbersinput">
+    </div>
+    <label for="typename">語意分析用</label>
+    <input type="text" name="luis" class="form-control" id="luis">
+    <button type="submit" class="btn btn-primary nt-3">Submit</button>
+
+</form>
 {% for data in datas%}
-<div class="ml-3 mb-5" style="float: left;"><img id="gla" style="max-width: 200px;" src="{% static data.0 %}" alt=""></div>
+<div class="ml-3 mb-5" style="float: left;"><img id="gla" style="max-width: 200px;" src="{% static data.image_path %}" alt=""></div>
 {% endfor %}
 {% endblock%}
 

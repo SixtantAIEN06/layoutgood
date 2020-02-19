@@ -366,3 +366,73 @@
 {'person': 1, 'toothbrush': 1}@home/static/images/ajkl232.jpg
 {'person': 1, 'toothbrush': 1}@home/static/images/ajkl232.jpg
 {'person': 1, 'toothbrush': 1}@home/static/images/ajkl232.jpg
+{'car': 1, 'cow': 1}@home/static/images/cow123.jpg
+{'car': 1, 'cow': 1}@home/static/images/cow123.jpg
+{'car': 1, 'cow': 1}@home/static/images/cow123.jpg
+{'car': 1, 'cow': 1}@home/static/images/cow123.jpg
+{'car': 1, 'cow': 1}@home/static/images/cow123.jpg
+{'car': 1, 'cow': 1}@home/static/images/cow123.jpg
+{'car': 1, 'cow': 1}@home/static/images/cow123.jpg
+{'car': 1, 'cow': 1}@home/static/images/cow123.jpg
+{'car': 1, 'cow': 1}@home/static/images/cow123.jpg
+{'car': 1, 'cow': 1}@home/static/images/cow123.jpg
+{'dog': 1}@home/static/images/doggg.jpeg
+{'dog': 1}@home/static/images/doggg.jpeg
+{'dog': 1}@home/static/images/doggg.jpeg
+{'dog': 1}@home/static/images/doggg.jpeg
+{'dog': 1}@home/static/images/doggg.jpeg
+{'dog': 1}@home/static/images/doggg.jpeg
+{'dog': 1}@home/static/images/doggg.jpeg
+{'dog': 1}@home/static/images/doggg.jpeg
+{'dog': 1}@home/static/images/doggg.jpeg
+{'dog': 1}@home/static/images/doggg.jpeg
+{'wine_glass': 3, 'person': 1}@home/static/images/dog741.jpeg
+{'wine_glass': 3, 'person': 1}@home/static/images/dog741.jpeg
+{'wine_glass': 3, 'person': 1}@home/static/images/dog741.jpeg
+{'wine_glass': 3, 'person': 1}@home/static/images/dog741.jpeg
+{'wine_glass': 3, 'person': 1}@home/static/images/dog741.jpeg
+{'wine_glass': 3, 'person': 1}@home/static/images/dog741.jpeg
+{'wine_glass': 3, 'person': 1}@home/static/images/dog741.jpeg
+{'wine_glass': 3, 'person': 1}@home/static/images/dog741.jpeg
+{'wine_glass': 3, 'person': 1}@home/static/images/dog741.jpeg
+{'wine_glass': 3, 'person': 1}@home/static/images/dog741.jpeg
+{'person': 1, 'bird': 1, 'laptop': 1}@home/static/images/daas.jpeg
+{'person': 1, 'bird': 1, 'laptop': 1}@home/static/images/daas.jpeg
+{'person': 1, 'bird': 1, 'laptop': 1}@home/static/images/daas.jpeg
+{'person': 1, 'bird': 1, 'laptop': 1}@home/static/images/daas.jpeg
+{'person': 1, 'bird': 1, 'laptop': 1}@home/static/images/daas.jpeg
+{'person': 1, 'bird': 1, 'laptop': 1}@home/static/images/daas.jpeg
+{'person': 1, 'bird': 1, 'laptop': 1}@home/static/images/daas.jpeg
+{'person': 1, 'bird': 1, 'laptop': 1}@home/static/images/daas.jpeg
+{'person': 1, 'bird': 1, 'laptop': 1}@home/static/images/daas.jpeg
+{'person': 1, 'bird': 1, 'laptop': 1}@home/static/images/daas.jpeg
+{'person': 5, 'handbag': 1, 'cell_phone': 1}@home/static/images/P_20200201_164253.jpg
+{'person': 5, 'handbag': 1, 'cell_phone': 1}@home/static/images/P_20200201_164253.jpg
+{'person': 5, 'handbag': 1, 'cell_phone': 1}@home/static/images/P_20200201_164253.jpg
+{'person': 5, 'handbag': 1, 'cell_phone': 1}@home/static/images/P_20200201_164253.jpg
+{'person': 5, 'handbag': 1, 'cell_phone': 1}@home/static/images/P_20200201_164253.jpg
+{'person': 5, 'handbag': 1, 'cell_phone': 1}@home/static/images/P_20200201_164253.jpg
+{'person': 5, 'handbag': 1, 'cell_phone': 1}@home/static/images/P_20200201_164253.jpg
+{'person': 5, 'handbag': 1, 'cell_phone': 1}@home/static/images/P_20200201_164253.jpg
+{'person': 5, 'handbag': 1, 'cell_phone': 1}@home/static/images/P_20200201_164253.jpg
+{'person': 5, 'handbag': 1, 'cell_phone': 1}@home/static/images/P_20200201_164253.jpg
+{'banana': 10}@home/static/images/banana.jpeg
+{'banana': 10}@home/static/images/banana.jpeg
+{'banana': 10}@home/static/images/banana.jpeg
+{'banana': 10}@home/static/images/banana.jpeg
+{'banana': 10}@home/static/images/banana.jpeg
+{'banana': 10}@home/static/images/banana.jpeg
+{'banana': 10}@home/static/images/banana.jpeg
+{'banana': 10}@home/static/images/banana.jpeg
+{'banana': 10}@home/static/images/banana.jpeg
+{'banana': 10}@home/static/images/banana.jpeg
+{'vase': 1, 'toothbrush': 1}@home/static/images/gloves.jpeg
+{'vase': 1, 'toothbrush': 1}@home/static/images/gloves.jpeg
+{'vase': 1, 'toothbrush': 1}@home/static/images/gloves.jpeg
+{'vase': 1, 'toothbrush': 1}@home/static/images/gloves.jpeg
+{'vase': 1, 'toothbrush': 1}@home/static/images/gloves.jpeg
+{'vase': 1, 'toothbrush': 1}@home/static/images/gloves.jpeg
+{'vase': 1, 'toothbrush': 1}@home/static/images/gloves.jpeg
+{'vase': 1, 'toothbrush': 1}@home/static/images/gloves.jpeg
+{'vase': 1, 'toothbrush': 1}@home/static/images/gloves.jpeg
+{'vase': 1, 'toothbrush': 1}@home/static/images/gloves.jpeg
