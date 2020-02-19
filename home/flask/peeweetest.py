@@ -1,6 +1,6 @@
 from  peewee  import  *
 
-db  =  MySQLDatabase ( 'test' ,  user = 'user1' ,  passwd = 'User123456@' )
+db  =  MySQLDatabase ( 'test' ,  user = 'root' ,  passwd = 'root' )
 
 class  Classified ( Model ): 
     with open('home/object_detection/data/classes/coco2.names', 'r') as f:

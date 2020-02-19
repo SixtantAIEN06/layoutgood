@@ -9,7 +9,9 @@ import glob
 import os
 # import subprocess
 import tensorflow as tf
-import datetime 
+import datetime
+import requests
+import json as jjj
 from .models import Classified
 # from .modelsclassified import classified
 from django.core import serializers
@@ -29,12 +31,64 @@ def index(request):
     return render(request,'home/index.html', locals())
 
 def selected(request):
-    searchname=request.GET.get("searchname")
+    # searchname=request.GET.get("searchname")
     luis=request.GET.get("luis")
-    nums=request.GET.get('nums')
-    cowlist={searchname:nums}
-    datas=Classified.objects.filter(**cowlist)
-    now=datatime.datetime.now()
+    print("luis = ",luis)
+    response = requests.get(
+    url=f'https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/47fdbcf4-00cb-4e9a-a55c-df61cef1a102?verbose=true&timezoneOffset=0&subscription-key=7e25519a1e41462e8561a0bd60f5ddc2&q={luis}')
+    print("response.text = ",response.text)
+    luisdata = jjj.loads(response.text)
+    intent = luisdata['topScoringIntent']['intent']
+    keyword = []
+    keywordnumber = []
+    for i in range(len(luisdata['entities'])):
+        if 'resolution' not in (luisdata['entities'][i]):
+            keyword.append(luisdata['entities'][i]['entity'])
+
+        if 'resolution' in (luisdata['entities'][i]):
+            keywordnumber.append(luisdata['entities'][i]['resolution']['value'])
+    if len(keywordnumber) == 0:
+        nonumber = True
+    else:
+        nonumber = False
+    a = []
+    b = []
+    with open('home/object_detection/data/classes/111.txt','r') as f :
+        for i in f.readlines():
+            a.append(i.replace('\n',''))
+    with open('home/object_detection/data/classes/coco.names','r') as f :
+        for i in f.readlines():
+            b.append(i.replace('\n',''))
+    print("keyword" ,keyword)
+    engindex = []
+    engkey = []
+    cowlist = {}
+    for i in keyword:
+        engindex.append(a.index(i))
+    print("engindex" ,engindex)
+    for i in engindex:
+        engkey.append(b[i])
+    print("engkey" ,engkey)
+    for i in range(len(keyword)):
+        if nonumber:
+            keywordnumber.append('0')
+            cowlist[engkey[i]] = keywordnumber[i]
+        else:
+            cowlist[engkey[i]] = keywordnumber[i]
+    print("cowlist" ,cowlist)
+    # print("engindex" ,engindex)
+    # print("searchname  = ",searchname)
+    # print("keywordnumber  = ",keywordnumber)
+    # nums = keywordnumber[0]
+    # print("nums  = ",nums)
+    # nums=request.GET.get('nums')
+    # cowlist={searchname:nums}
+
+    if nonumber:
+        datas=Classified.objects.exclude(**cowlist)
+    else:
+        datas=Classified.objects.filter(**cowlist)
+    now=datetime.datetime.now()
     return render(request,'select.html',locals())
 
 def gallery(request):
