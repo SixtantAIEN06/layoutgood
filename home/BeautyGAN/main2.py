@@ -47,10 +47,10 @@ def beauty(image):
         dimface = np.matrix([[p.x, p.y] for p in predictor(img, rect).parts()])
         dimface2=np.array(dimface[:17])         #下巴17個點+眉毛左右各3
         for i in range(3):
-            # dimface[26-i]=dimface[26-i]-[-w_//10,w_//10]   #抓到眉毛以上
+            dimface[26-i]=dimface[26-i]-[-w_//8,w_//8]   #抓到眉毛以上
             dimface2=np.append(dimface2,dimface[26-i],0)
         for i in range(3):
-            # dimface[26-i]=dimface[19-i]-[w_//10,w_//10]
+            dimface[26-i]=dimface[19-i]-[w_//8,w_//8]
             dimface2=np.append(dimface2,dimface[19-i],0)
 
         face_mask_w=dimface2[np.argmax(dimface2,0)][0][0,0]-dimface2[np.argmin(dimface2,0)][0][0,0];
@@ -64,7 +64,7 @@ def beauty(image):
         cv2.fillPoly(mask,[dimface2],(255,255,255))
         # cv2.imwrite("./home/static/temp/mask.jpg",mask)
 
-        im1 = img[y:y+h,x:x+w,::-1]
+        im1 = img[y_:y_+h_,x_:x_+w_,::-1]
 
 
         # Display the output
@@ -106,7 +106,7 @@ def beauty(image):
             result[:img_size, (i + 1) * img_size: (i + 2) * img_size] = Xs_[0]
             
         imsave('./home/static/temp/result_.jpg', result)
-        result_ = cv2.resize(imread('./home/static/temp/result_.jpg'), (w*(len(makeups) + 1) , h))
+        result_ = cv2.resize(imread('./home/static/temp/result_.jpg'), (w_*(len(makeups) + 1) , h_))
 
         imsave('./home/static/temp/result_.jpg', result_)
         # result_=Image.open('result_.jpg')
@@ -115,7 +115,7 @@ def beauty(image):
         if face_num==0:
             for i in range(len(makeups)):
                 # print(i*w,0, (i+1)*w, h)
-                final[y:y+h , x+(i+1)*org_w : x+w+(i+1)*org_w]=result_[:h,(i+1)*w:(i+2)*w]
+                final[y_:y_+h_ , x_+(i+1)*org_w : x_+w_+(i+1)*org_w]=result_[:h_,(i+1)*w_:(i+2)*w_]
             imsave('./home/static/temp/resultsq.jpg', final)
             for i in range(len(makeups)):
                 src=cv2.imread('./home/static/temp/resultsq.jpg')
@@ -130,7 +130,7 @@ def beauty(image):
             final=cv2.imread('./home/static/temp/result.jpg')[:,:,::-1]
             for i in range(len(makeups)):
                 # print(i*w,0, (i+1)*w, h)
-                final[y:y+h , x+(i+1)*org_w : x+w+(i+1)*org_w]=result_[:h,(i+1)*w:(i+2)*w]
+                final[y_:y_+h_ , x_+(i+1)*org_w : x_+w_+(i+1)*org_w]=result_[:h_,(i+1)*w_:(i+2)*w_]
             imsave('./home/static/temp/resultsq.jpg', final)  
             for i in range(len(makeups)):      
                 src=cv2.imread('./home/static/temp/resultsq.jpg')
