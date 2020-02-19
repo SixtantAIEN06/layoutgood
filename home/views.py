@@ -24,38 +24,22 @@ YoloTest = YoloTest()
 
 # Create your views here.
 def index(request):
-    date=datetime.datetime.now()
+    now=datetime.datetime.now()
     #return HttpResponse("<p>Hello world!</p>")
     return render(request,'home/index.html', locals())
 
 def selected(request):
-    # if request.method=='POST':
-    #     request
-    # condition = request.POST['searchbox']
-    typessname="person"
-    typenamewithnober=typessname+"__gt"
-    print(typenamewithnober)
-    numbers=1
-    # # keypair={type:number}
-    # select_pic=classified()
-    # datas=select_pic.selected(types,numbers)
-    
-    # select_pic.objects.filter(types=numbers)
-    datas=Classified.objects.values_list("image_path").filter(bear__gte=numbers)
-    # datas=cat.objects.filter(types=numbers)
-
-    # print(datas)
+    searchname=request.GET.get("searchname")
+    luis=request.GET.get("luis")
+    nums=request.GET.get('nums')
+    cowlist={searchname:nums}
+    datas=Classified.objects.filter(**cowlist)
+    now=datatime.datetime.now()
     return render(request,'select.html',locals())
 
 def gallery(request):
-    # public_pic=classified()
-    # datas=public_pic.all()
-    # datas=Classified.objects.filter(person__gt=0)
-    date=datetime.datetime.now()
-
-    # print(Classified.objects.values_list("image_path"))
-    datas=Classified.objects.values_list("image_path")
-    # print(datas[89])
+    now=datetime.datetime.now()
+    datas=Classified.objects.all()
     # return JsonResponse(datas,safe=False)
     return render(request,'gallery.html',locals())
 
@@ -67,13 +51,12 @@ def facerecognition(request):
         print('myfile', myfile)
         fs = FileSystemStorage(location='home/static/images/')
         fs.save(myfile.name,myfile)
-        forImport_recognize_faces_image.readPara("home/dlib/encoding3.pickle",f'home/static/images/{myfile.name}','cnn') #f'home/static/images/{myfile.name}
+        forImport_recognize_faces_image.readPara("home/dlib/encoding3.pickle",f'home/static/images/{myfile.name}','cnn') 
+        #f'home/static/images/{myfile.name}
         photopath="images/upload.jpg"
         
-
     title = "FACE RECOGNITION"
     now = datetime.datetime.now()
-    
     return render(request,'layout.html',locals())
 
 
@@ -90,8 +73,8 @@ def styletransfer(request):
         for i in range(len(makeups)):
             photopaths.append(f"makeupstyle/{i+1}.jpg")
         print(photopaths)
-
         return redirect("/styletransfer2")
+
     title = "STYLE TRANSFER"
     now = datetime.datetime.now()
     return render(request,'layout.html',locals())
@@ -99,7 +82,6 @@ def styletransfer(request):
 def styletransfer2(request):
     date=datetime.datetime.now()
     if request.method =='POST' and request.POST["style"]:
-
         beautysplit.split(request.POST["style"])
         makeups = glob.glob(os.path.join('home','static','makeupstyle','*'))
         photopath="./home/static/temp/split.jpg"
@@ -113,14 +95,13 @@ def styletransfer2(request):
     return render(request,'styletransfer2.html',locals())  
         
 
-def objectdetection(request):
+def upload(request):
     date=datetime.datetime.now()
     if request.method =='POST' and request.FILES['photoupload']:
         myfile=request.FILES['photoupload']
         fs = FileSystemStorage(location='home/static/images/')
         fs.save(myfile.name,myfile)
         # print(f'home/static/images/{myfile.name}.jpg')
-        
         # photopath="images/upload.jpg"
         path_head='home/static/'
         img_path=f'images/{myfile.name}'
@@ -129,14 +110,13 @@ def objectdetection(request):
         # print(YoloTest.dlist)
         for item in YoloTest.dlist:
             print("========================================")
-
             print(item)
             print("========================================")
             sort =Classified.objects.create(**item)
             sort .save()
             # sort = Classified(**item) 
             # sort.save()
-    title="OBJECT DETECTION"
+    title="UPLOAD"
     now=datetime.datetime.now()
     return render(request,'layout.html',locals())
 
@@ -148,7 +128,7 @@ def delmypic(request):
 def json(request):
     # if request.method =='POST':
     datas={"name":"ford","age":"31"}
-    # now=datetime.datetime.now()
+    now=datetime.datetime.now()
     return JsonResponse(datas,safe=False)
 
 
@@ -157,5 +137,20 @@ def httpget(request):
     name=request.GET["name"]
     age=request.GET["age"]
 
-    # now=datetime.datetime.now()
+    now=datetime.datetime.now()
+    return HttpResponse(f"HELLO {name},{age}")
+
+
+def signup(request):
+    # if request.method =='POST':
+    name=request.GET["name"]
+    age=request.GET["age"]
+
+    now=datetime.datetime.now()
+    return HttpResponse(f"HELLO {name},{age}")
+
+def login(request):
+
+
+    now=datetime.datetime.now()
     return HttpResponse(f"HELLO {name},{age}")
