@@ -23,7 +23,7 @@ cfg                             = __C
 __C.YOLO                        = edict()
 
 # Set the class name
-__C.YOLO.CLASSES                = "home/object_detection/data/classes/coco2.names"
+__C.YOLO.CLASSES                = "home/object_detection/data/classes/coco.names"
 __C.YOLO.ANCHORS                = "home/object_detection/data/anchors/basline_anchors.txt"
 __C.YOLO.MOVING_AVE_DECAY       = 0.9995
 __C.YOLO.STRIDES                = [8, 16, 32]
@@ -45,7 +45,7 @@ __C.TRAIN.LEARN_RATE_END        = 1e-6
 __C.TRAIN.WARMUP_EPOCHS         = 2
 __C.TRAIN.FISRT_STAGE_EPOCHS    = 0
 __C.TRAIN.SECOND_STAGE_EPOCHS   = 15
-__C.TRAIN.INITIAL_WEIGHT        = "./checkpoint_test/yolov3_test_loss=30.0225.ckpt-15"
+__C.TRAIN.INITIAL_WEIGHT        = "./checkpoint_test/yolov3_coco_demo.ckpt"
 
 
 
@@ -60,7 +60,7 @@ __C.TEST.WRITE_IMAGE            = True
 __C.TEST.WRITE_IMAGE_PATH       = "home/object_detection/data/detection/"
 __C.TEST.IMAGES_PATH            = "home/static/images/"
 __C.TEST.WRITE_IMAGE_SHOW_LABEL = True
-__C.TEST.WEIGHT_FILE            = "home/object_detection/checkpoint_test/yolov3_test_loss=30.0225.ckpt-15"
+__C.TEST.WEIGHT_FILE            = "home/object_detection/checkpoint_test/yolov3_coco_demo.ckpt"
 __C.TEST.SHOW_LABEL             = True
 __C.TEST.SCORE_THRESHOLD        = 0.3
 __C.TEST.IOU_THRESHOLD          = 0.45
