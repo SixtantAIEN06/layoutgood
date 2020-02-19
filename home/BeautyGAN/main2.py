@@ -38,19 +38,31 @@ def beauty(image):
     for (face_num,(x, y, w, h)) in enumerate(rects):
         img = cv2.imread('./home/static/temp/before.jpg')
 
-        x_=x-w//8                       #放大臉抓取範圍
-        y_=y-h//8
-        w_=w+w//8*2
-        h_=h+h//8*2             
+        if x>(w//8):
+            x_=x-w//8  
+            w_=w+w//8*2
+        else:
+            x_=x
+            w_=w
+
+                                 #放大臉抓取範圍
+        if y>(h//8):
+            y_=y-h//8
+            h_=h+h//8*2  
+        else:
+            y_=y
+            h_=h
+
         rect=dlib.rectangle(x_,y_,x_+w_,y_+h_)
 
         dimface = np.matrix([[p.x, p.y] for p in predictor(img, rect).parts()])
         dimface2=np.array(dimface[:17])         #下巴17個點+眉毛左右各3
         for i in range(3):
-            dimface[26-i]=dimface[26-i]-[-w_//8,w_//8]   #抓到眉毛以上
-            dimface2=np.append(dimface2,dimface[26-i],0)
+            if x>(w//8) and y>(h//8):
+                dimface[26-i]=dimface[26-i]-[-w_//8,w_//8]   #抓到眉毛以上
         for i in range(3):
-            dimface[26-i]=dimface[19-i]-[w_//8,w_//8]
+            if x>(w//8) and y>(h//8):
+                dimface[26-i]=dimface[19-i]-[w_//8,w_//8]
             dimface2=np.append(dimface2,dimface[19-i],0)
 
         face_mask_w=dimface2[np.argmax(dimface2,0)][0][0,0]-dimface2[np.argmin(dimface2,0)][0][0,0];
@@ -95,7 +107,8 @@ def beauty(image):
         Xs = graph.get_tensor_by_name('generator/xs:0')
 
         for i in range(len(makeups)):
-            makeup = cv2.resize(imread(makeups[i]), (img_size, img_size))
+            makeup = cv2.resize(imread(f"home/static/makeupstyle/{i+1}.jpg"), (img_size, img_size))
+            # print(makeups[i])
             Y_img = np.expand_dims(preprocess(makeup), 0)
             Xs_ = sess.run(Xs, feed_dict={X: X_img, Y: Y_img})
             Xs_ = deprocess(Xs_)
