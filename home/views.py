@@ -41,60 +41,100 @@ def selected(request):
     intent = luisdata['topScoringIntent']['intent']
     keyword = []
     keywordnumber = []
-    for i in range(len(luisdata['entities'])):
-        if 'resolution' not in (luisdata['entities'][i]):
-            keyword.append(luisdata['entities'][i]['entity'])
-
-        if 'resolution' in (luisdata['entities'][i]):
-            keywordnumber.append(luisdata['entities'][i]['resolution']['value'])
-    if len(keywordnumber) == 0:
-        nonumber = True
-    else:
-        nonumber = False
-    a = []
-    b = []
-    with open('home/object_detection/data/classes/111.txt','r') as f :
-        for i in f.readlines():
-            a.append(i.replace('\n',''))
-    with open('home/object_detection/data/classes/coco.names','r') as f :
-        for i in f.readlines():
-            b.append(i.replace('\n',''))
-    print("keyword" ,keyword)
-    engindex = []
-    engkey = []
-    cowlist = {}
-    for i in keyword:
-        engindex.append(a.index(i))
-    print("engindex" ,engindex)
-    for i in engindex:
-        engkey.append(b[i])
-    print("engkey" ,engkey)
-    for i in range(len(keyword)):
-        if nonumber:
-            keywordnumber.append('0')
-            cowlist[engkey[i]] = keywordnumber[i]
+    if 'topScoringIntent' in luisdata:
+        for i in range(len(luisdata['entities'])):
+            if 'resolution' not in (luisdata['entities'][i]):
+                keyword.append(luisdata['entities'][i]['entity'])
+            if 'resolution' in (luisdata['entities'][i]):
+                keywordnumber.append(luisdata['entities'][i]['resolution']['value'])
+        if len(keywordnumber) == 0:
+            nonumber = True
         else:
-            cowlist[engkey[i]] = keywordnumber[i]
-    print("cowlist" ,cowlist)
-    # print("engindex" ,engindex)
-    # print("searchname  = ",searchname)
-    # print("keywordnumber  = ",keywordnumber)
-    # nums = keywordnumber[0]
-    # print("nums  = ",nums)
-    # nums=request.GET.get('nums')
-    # cowlist={searchname:nums}
+            nonumber = False
+        a = []
+        b = []
+        with open('home/object_detection/data/classes/111.txt','r') as f :
+            for i in f.readlines():
+                a.append(i.replace('\n',''))
+        with open('home/object_detection/data/classes/coco.names','r') as f :
+            for i in f.readlines():
+                b.append(i.replace('\n',''))
+        print("keyword" ,keyword)
+        engindex = []
+        engkey = []
+        cowlist = {}
+        for i in keyword:
+            engindex.append(a.index(i))
+        print("engindex" ,engindex)
+        for i in engindex:
+            engkey.append(b[i])
+        print("engkey" ,engkey)
+        for i in range(len(keyword)):
+            if nonumber:
+                keywordnumber.append('0')
+                cowlist[engkey[i]] = keywordnumber[i]
+            else:
+                cowlist[engkey[i]] = keywordnumber[i]
+        if nonumber:
+            if intent == "正面":
+                datas=Classified.objects.exclude(**cowlist)
+            elif intent == "負面":
+                datas=Classified.objects.filter(**cowlist)
+        else:
+            if intent == "正面":
+                datas=Classified.objects.filter(**cowlist)
+            elif intent == "負面":
+                datas=Classified.objects.exclude(**cowlist)
+    # else:
+    #     print("重新輸入")
+    #     return render(request,'gallery.html',locals())
+    data = []
+    output_imagepath = []
+    for d in datas:
+        data.append(d.image_path)
+        print("data" , data)
+        print("data",type(data))
+    
+    if 'queryset' in request.session:
 
-    if nonumber:
-        datas=Classified.objects.exclude(**cowlist)
+        data2 = request.session['queryset']
+        print("data2",type(data2))
+    
+        # data3 = list(set(data) - set(data2))
+        # output_imagepath = list(set(data) - set(data3))
+        # output_imagepath = data.intersection(data2) 
+        output_imagepath = list(set(data) & set(data2))
     else:
-        datas=Classified.objects.filter(**cowlist)
+        output_imagepath = data
+    request.session['queryset'] = output_imagepath
+    print("request.session['queryset']",request.session['queryset'])
+
+    # cowlist2 = request.session['queryset']
+    # print("cowlist2", cowlist2)
+
+    
+    # for data2 in datas:  
+    #     data2.append(data.image_path)
+    #     print("data" , data.image_path)
+    # request.session['queryset'] = data2
+    # print("request.session['queryset']",request.session['queryset'])
+
     now=datetime.datetime.now()
     return render(request,'select.html',locals())
 
 def gallery(request):
     now=datetime.datetime.now()
     datas=Classified.objects.all()
+    try:
+        del request.session['queryset']
+    except:
+        print('no session queryset')
     # return JsonResponse(datas,safe=False)
+    # if 'queryset' not in request.session:
+    #     print("cowlist2","None")
+    # elif 'queryset' in request.session:
+    #     print("cowlist2","YES")
+
     return render(request,'gallery.html',locals())
 
 def facerecognition(request):
