@@ -155,7 +155,7 @@ def facerecognition(request):
 
 
 def styletransfer(request):
-    date=datetime.datetime.now()  
+     
     if request.method =='POST' and request.FILES['photoupload']:
         myfile=request.FILES['photoupload']
         fs = FileSystemStorage(location='home/static/images/')
