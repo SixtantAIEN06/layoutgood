@@ -95,9 +95,23 @@ class Classified(models.Model):
     landscape = models.IntegerField(default=0)
     couch = models.IntegerField(default=0)
     tv = models.IntegerField(default=0)
+    aaa=models.IntegerField(default=0)
+    ford=models.IntegerField(default=0)
+    hao=models.IntegerField(default=0)
+    cj=models.IntegerField(default=0)
+    ywt=models.IntegerField(default=0)
+    unknown=models.IntegerField(default=0)
     image_path = models.TextField()
+
+    class Meta:
+        db_table="classified"
+        managed=True
 
 
 class Members(models.Model):
     username = models.TextField()
     password = models.TextField()
+
+    class Meta:
+        db_table="members"
+        managed=True
