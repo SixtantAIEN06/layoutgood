@@ -9,7 +9,7 @@
   <form id="form1" runat="server" method="POST" enctype="multipart/form-data" onsubmit="return submitXML()">
     {% csrf_token %}
     <!-- <div class="alert"></div> -->
-
+    <div>{{ message }}</div>
     {% if photopath != None %}
     <div style="margin:0 auto"><img id="blah" style=" max-height: 600px;  margin:0 auto" src="{% static photopath %}">
     </div>
@@ -33,12 +33,12 @@
       <sapn class="ml-3" id="warnforpic"></sapn>
     </div>
 
-    <!-- {% if photopath != None %}
+    {% if photopath != None %}
     <button type="button" id="photodownload" class="btn btn-primary">Download</button>
     {% endif %}
     <div id="show"></div>
     <div><button type="button" class="btn btn-primary" id="json">json</button></div>
-    <div><button type="button" class="btn btn-primary" id="httpget">httpget</button></div> -->
+    <div><button type="button" class="btn btn-primary" id="httpget">httpget</button></div> 
   </form>
 </div>
 

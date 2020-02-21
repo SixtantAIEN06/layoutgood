@@ -14,6 +14,8 @@ urlpatterns = [
     path('styletransfer/httpget/',views.httpget),
     path('selected/',views.selected),
     path('login/',views.login),
-    path('signup/',views.signup)
+    path('signup/',views.signup),
+    path('json/',views.json),
+    path('httpget/',views.httpget)
 
 ]

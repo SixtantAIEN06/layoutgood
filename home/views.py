@@ -204,7 +204,12 @@ def styletransfer(request):
         for i in range(len(makeups)):
             photopaths.append(f"makeupstyle/{i+1}.jpg")
         print(photopaths)
-        return redirect("/styletransfer2")
+        #print('rect2',BeautyGAN.rect2)
+        if list(BeautyGAN.rect2):
+            return redirect("/styletransfer2")
+        else:
+            message="請放入人臉的照片"
+            return render(request,'layout.html',locals())
 
     title = "STYLE TRANSFER"
     now = datetime.datetime.now()
