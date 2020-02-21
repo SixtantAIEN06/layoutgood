@@ -116,9 +116,17 @@ def selected(request):
                 else:
                     output_imagepath = data
                 if len(output_imagepath) == 0:
+                    datas = Classified.objects.all()
+                    for d in datas:
+                        data.append(d.image_path)
                     errormassage = "沒有該項目，請重新搜尋"
-                    output_imagepath = request.session['queryset']
-                    print("request.session['queryset']",request.session['queryset'])
+                    if 'queryset' in request.session:
+                        output_imagepath = request.session['queryset']
+                        print("request.session['queryset']",request.session['queryset'])
+                    else:
+                        output_imagepath = data
+                    return render(request,'select.html',locals())
+
                 else:
                     request.session['queryset'] = output_imagepath
                     print("request.session['queryset']",request.session['queryset'])
