@@ -13,6 +13,12 @@
     <!-- <div class="form-group">
             <label for="numbersinput">Numbers</label>
             <input type="text" name="nums" class="form-control" id="numbersinput"> -->
+            {% if errormassage != None %}
+            <div class="alert alert-info" role="alert">
+                {{ errormassage }}
+              </div>
+            {% endif %}
+
         <label for="typename">語意分析用</label>
         <input type="text" name="luis" class="form-control" id="luis">
     </div>
