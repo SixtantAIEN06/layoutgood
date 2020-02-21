@@ -10,6 +10,7 @@ import argparse
 from PIL import Image
 import dlib
 
+rect2=''
 
 def preprocess(img):
     return (img / 255. - 0.5) * 2
@@ -18,6 +19,7 @@ def deprocess(img):
     return (img + 1) / 2
 
 def beauty(image):
+    global rect2
     im=Image.open(image)
     image=im.convert('RGB')
     image.save('./home/static/temp/toRGB.jpg')
@@ -33,6 +35,8 @@ def beauty(image):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     # Detect faces
     rects = face_cascade.detectMultiScale(gray, 1.1, 5)
+    print("rects",rects)
+    rect2=rects
     # Draw rectangle around the faces
     
     for (face_num,(x, y, w, h)) in enumerate(rects):
