@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse,JsonResponse
 from django.core.files.storage import FileSystemStorage
-from .dlib import forImport_recognize_faces_image
+from .dlib import recognize_faces_image
+# from .dlib import forImport_recognize_faces_image
 from .BeautyGAN import main2 as BeautyGAN
 from .BeautyGAN import split as beautysplit
 import cv2
@@ -60,8 +61,14 @@ def selected(request):
                     nonumber = False
                 a = []
                 b = []
+<<<<<<< HEAD
                 with open('home/object_detection/data/classes/222.txt','r') as f :
+=======
+                with open('home/object_detection/data/classes/111.txt','r') as f :
+                   
+>>>>>>> b03f73e4ffe02f18cc09c33b93041fe72f0da011
                     for i in f.readlines():
+                      
                         a.append(i.replace('\n',''))
                 with open('home/object_detection/data/classes/coco_2.names','r') as f :
                     for i in f.readlines():
@@ -196,7 +203,9 @@ def facerecognition(request):
         print('myfile', myfile)
         fs = FileSystemStorage(location='home/static/images/')
         fs.save(myfile.name,myfile)
-        forImport_recognize_faces_image.readPara("home/dlib/encoding3.pickle",f'home/static/images/{myfile.name}','cnn') 
+        a=recognize_faces_image.readPara("home/dlib/encoding/encoding_all_nj1_300p.pickle",f'home/static/images/{myfile.name}','hog',0.45)
+        
+        # forImport_recognize_faces_image.readPara("home/dlib/encoding3.pickle",f'home/static/images/{myfile.name}','cnn') 
         #f'home/static/images/{myfile.name}
         photopath="images/upload.jpg"
         
@@ -257,7 +266,19 @@ def upload(request):
         img_path=f'images/{myfile.name}'
         # YoloTest.evaluate(f'home/static/images/{myfile.name}')
         YoloTest.evaluate(path_head,img_path)
-        # print(YoloTest.dlist)
+
+        a=recognize_faces_image.readPara("home/dlib/encoding/encoding_all_nj1_300p.pickle",f'home/static/images/{myfile.name}','hog',0.45)
+        a=dict(a)
+        print("a",a)
+
+        dataset=[]
+        for i in YoloTest.dlist:
+            i.update(a)
+            dataset.append(i)
+        print("dataset",dataset)
+       
+        # print("a+list",dict(YoloTest.dlist))
+        
         for item in YoloTest.dlist:
             print("========================================")
             print(item)
@@ -292,15 +313,17 @@ def httpget(request):
 
 
 def signup(request):
-    # if request.method =='POST':
-    name=request.GET["name"]
-    age=request.GET["age"]
+    
 
     now=datetime.datetime.now()
-    return HttpResponse(f"HELLO {name},{age}")
+    return render(request,'signup.html')
 
 def login(request):
 
 
     now=datetime.datetime.now()
-    return HttpResponse(f"HELLO {name},{age}")
+    return render(request,'login.html')
+
+
+def tryaudio(request):
+    return render(request,'tryaudioandcam.html')

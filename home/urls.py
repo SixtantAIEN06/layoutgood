@@ -16,6 +16,8 @@ urlpatterns = [
     path('login/',views.login),
     path('signup/',views.signup),
     path('json/',views.json),
-    path('httpget/',views.httpget)
+    path('httpget/',views.httpget),
+    path('tryaudio/',views.tryaudio),
+
 
 ]
