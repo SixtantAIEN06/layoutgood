@@ -42,6 +42,7 @@ def selected(request):
     datas = Classified.objects.all()
     for d in datas:
         data.append(d.image_path)
+    data3 = data
     if 'topScoringIntent' in luisdata:
         intent = luisdata['topScoringIntent']['intent']
         keyword = []
@@ -59,10 +60,10 @@ def selected(request):
                     nonumber = False
                 a = []
                 b = []
-                with open('home/object_detection/data/classes/111.txt','r') as f :
+                with open('home/object_detection/data/classes/222.txt','r') as f :
                     for i in f.readlines():
                         a.append(i.replace('\n',''))
-                with open('home/object_detection/data/classes/coco.names','r') as f :
+                with open('home/object_detection/data/classes/coco_2.names','r') as f :
                     for i in f.readlines():
                         b.append(i.replace('\n',''))
                 print("keyword" ,keyword)
@@ -102,6 +103,19 @@ def selected(request):
                         datas=Classified.objects.filter(**cowlist)
                     elif intent == "負面":
                         datas=Classified.objects.exclude(**cowlist)
+                # if intent == "正面":
+                #     if nonumber:
+                #         datas = Classified.objects.filter(**cowlist)
+                #         datas2 = Classified.objects.exclude(**cowlist)
+                #     else:
+                #         datas=Classified.objects.filter(**cowlist)
+                # elif intent == "負面":
+                #     if nonumber:
+                #         datas = Classified.objects.filter(**cowlist)
+                #         datas2 = Classified.objects.exclude(**cowlist)
+                #     else:
+                #         datas = Classified.objects.exclude(**cowlist)
+
                 data = []
                 output_imagepath = []
                 for d in datas:
@@ -116,15 +130,15 @@ def selected(request):
                 else:
                     output_imagepath = data
                 if len(output_imagepath) == 0:
-                    datas = Classified.objects.all()
-                    for d in datas:
-                        data.append(d.image_path)
+                    # datas = Classified.objects.all()
+                    # for d in datas:
+                    #     data.append(d.image_path)
                     errormassage = "沒有該項目，請重新搜尋"
                     if 'queryset' in request.session:
                         output_imagepath = request.session['queryset']
                         print("request.session['queryset']",request.session['queryset'])
                     else:
-                        output_imagepath = data
+                        output_imagepath = data3
                     return render(request,'select.html',locals())
 
                 else:

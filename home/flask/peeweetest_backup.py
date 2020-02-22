@@ -1,7 +1,7 @@
 import peewee
 from  peewee  import  *
 
-db  =  MySQLDatabase ( 'test' ,  user = 'user1' ,  passwd = 'user1' )
+db  =  MySQLDatabase ( 'test' ,  user = 'root' ,  passwd = 'root' )
 
 class  Book ( peewee.Model ): 
     author  =  peewee.CharField () 
