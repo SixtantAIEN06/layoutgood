@@ -102,6 +102,7 @@ class Classified(models.Model):
     ywt=models.IntegerField(default=0)
     unknown=models.IntegerField(default=0)
     image_path = models.TextField()
+    image_owner=models.ForeignKey('Members',to_field='user_id',on_delete=models.CASCADE,limit_choices_to={'user_id': True})
 
     class Meta:
         db_table="classified"
@@ -109,8 +110,13 @@ class Classified(models.Model):
 
 
 class Members(models.Model):
-    username = models.TextField()
-    password = models.TextField()
+    username = models.CharField(max_length=255)
+    user_id = models.CharField(max_length=255,unique=True)
+    social_id = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    phone_number = models.CharField(max_length=255)
+    email=models.EmailField()
+    
 
     class Meta:
         db_table="members"

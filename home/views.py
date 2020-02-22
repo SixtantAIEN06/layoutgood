@@ -61,12 +61,7 @@ def selected(request):
                     nonumber = False
                 a = []
                 b = []
-<<<<<<< HEAD
                 with open('home/object_detection/data/classes/222.txt','r') as f :
-=======
-                with open('home/object_detection/data/classes/111.txt','r') as f :
-                   
->>>>>>> b03f73e4ffe02f18cc09c33b93041fe72f0da011
                     for i in f.readlines():
                       
                         a.append(i.replace('\n',''))
