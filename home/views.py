@@ -242,6 +242,11 @@ def styletransfer2(request):
         # stylephoto=os.listdir("./home/static/makeupstyle")
         # print(stylephoto)
         title = "SELECT THE STYLE YOU LIKE!"
+        if request.method =='POST' and request.POST["style"]=='style999':
+            beautysplit.split(request.POST["style"])
+            return redirect('/gallery/')  
+
+
     # elif os.path('./home/static/temp/split.jpg'):
     #     os.remove('./home/static/temp/split.jpg')  
     
